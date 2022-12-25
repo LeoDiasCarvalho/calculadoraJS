@@ -19,7 +19,7 @@ body{
     grid-template-rows: minmax(120px, auto) repeat(5, 100px);
 }
 
-.grid-container > .operacao{
+.grid-container > .sinal{
     background: #222;
 }
 
@@ -70,9 +70,3 @@ body{
     font-size: 3rem;
 }
 
-.grid-container > .autor{
-    align-content: center;
-    justify-content: center;
-    color: #111;
-    padding: 2px;
-}
