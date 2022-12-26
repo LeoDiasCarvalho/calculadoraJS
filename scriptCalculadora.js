@@ -13,6 +13,25 @@ class Calculadora {
         this.visorDepoisOperacao = depoisOperacao;
     }
 
+    escolhaDaOperacao(operacao){
+        if(this.dcOperacao === "") return;
+
+        if(this.acOperacao !== ""){
+            calculadora.calcular();
+        }
+
+        this.operacao = operacao;
+        this.acOperacao = `${this.dcOperacao} ${this.operacao}`;
+        this.dcOperacao = "";
+
+    }
+
+    mostrarNumero(numero){
+        if(this.dcOperacao.includes(".") && numero === ".") return;
+
+        this.dcOperacao = `${this.dcOperacao}${numero.toString()}`;
+    }
+
     limpar(){
         this.acOperacao = "";
         this.dcOperacao = "";
@@ -24,6 +43,10 @@ class Calculadora {
         this.visorDepoisOperacao.innerText = this.dcOperacao;
     }
 
+    corrigir(){
+        this.dcOperacao = this.dcOperacao.toString().slice(0, -1);
+    }
+
 }
 
 const calculadora = new Calculadora(visorAntesOperacao, visorDepoisOperacao);
@@ -33,9 +56,22 @@ btnLimpar.addEventListener("click", () => {
     calculadora.atualizarDisplay();
 });
 
+btnCorrigir.addEventListener("click", () => {
+    calculadora.corrigir();
+    calculadora.atualizarDisplay();
+});
 
+for(const numero of btnNumeros){
+    numero.addEventListener("click", () => {
+        calculadora.mostrarNumero(numero.innerText);
+        calculadora.atualizarDisplay();
+    });
+}
 
-
-
-
-
+for(const operacao of btnOperacao){
+    operacao.addEventListener("click", () => {
+        calculadora.escolhaDaOperacao(operacao.innerText);
+        calculadora.atualizarDisplay();
+    
+    })
+}
