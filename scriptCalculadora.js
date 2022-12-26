@@ -11,7 +11,31 @@ class Calculadora {
     constructor(antesOperacao, depoisOperacao){
         this.visorAntesOperacao = antesOperacao;
         this.visorDepoisOperacao = depoisOperacao;
+        this.limpar();
     }
+
+    formatarNumeroDisplay(numero) {
+        const numeroTexto = numero.toString();
+    
+        const digitosInteiros = parseFloat(numeroTexto.split(".")[0]);
+        const digitosDecimais = numeroTexto.split(".")[1];
+    
+        let inteiroDisplay;
+    
+        if (isNaN(digitosInteiros)) {
+          inteiroDisplay = "";
+        } else {
+          inteiroDisplay = digitosInteiros.toLocaleString("en", {
+            maximumFractionDigits: 0,
+          });
+        }
+    
+        if (digitosDecimais != null) {
+          return `${inteiroDisplay}.${digitosDecimais}`;
+        } else {
+          return inteiroDisplay;
+        }
+      }
 
     escolhaDaOperacao(operacao){
         if(this.dcOperacao === "") return;
@@ -21,7 +45,7 @@ class Calculadora {
         }
 
         this.operacao = operacao;
-        this.acOperacao = `${this.dcOperacao} ${this.operacao}`;
+        this.acOperacao = this.dcOperacao;
         this.dcOperacao = "";
 
     }
@@ -39,8 +63,8 @@ class Calculadora {
     }
 
     atualizarDisplay(){
-        this.visorAntesOperacao.innerText = this.acOperacao;
-        this.visorDepoisOperacao.innerText = this.dcOperacao;
+        this.visorAntesOperacao.innerText = `${this.formatarNumeroDisplay(this.acOperacao)} ${this.operacao || ""}`;
+        this.visorDepoisOperacao.innerText = this.formatarNumeroDisplay(this.dcOperacao);
     }
 
     corrigir(){
